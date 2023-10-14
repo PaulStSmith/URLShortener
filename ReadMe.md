@@ -157,7 +157,7 @@ You'll need to inform, that is configure, a Connection String for the project to
 
 To do this you’ll have to edit a file named ```appsettings.json```, located at the project root folder. This file contains all the configuration for the project to run.
 
-Open this file in your favorite simple text editor (I recommend Notepad++ &#x27A8; https://notepad-plus-plus.org), locate the section named “Connection Strings”, and within it locate the name-value pair named “db”.
+Open this file in your favorite simple text editor (I recommend _Notepad++_ &#x27A8; https://notepad-plus-plus.org), locate the section named ```ConnectionStrings```, and within it locate the name-value pair named ```db```.
 
 Once you find this, change its value to the appropriated Connection String for your database.
 
@@ -165,7 +165,7 @@ Once you find this, change its value to the appropriated Connection String for y
 
 In this project I used _NHibernate_ (https://nhibernate.info/) for database connection. It's a personal preference due the fact that I've been using it for a long time now.
 
-In the ```appsettings.json``` file, locate the section named “Hibernate”, and within it there are two values that need to be changed, according to the following table:
+In the ```appsettings.json``` file, locate the section named ```Hibernate```, and within it there are two values that need to be changed, according to the following table:
 
 | DBMS       | Driver                            | Dialect                              |
 |------------|-----------------------------------|--------------------------------------|
@@ -220,8 +220,15 @@ In a browser that call will redirect the user to the proper URL, and add the hit
 
 All other end points call be executed from ```Swagger```.
 
+# The API
+
+|             | Verb | Entry Point | Description               |
+|-------------|------|-------------|---------------------------|
+|[![][i1]][I1]| GET  | /{shortUrl} | Redirects to the long URL |
+
 # Known problems
 
 I could not make the NHibernate connect to my ```SQL Server Express``` instnace from inside the ```Docker``` (see my question at [StackOverflow][A2]).
 
   [A2]: https://stackoverflow.com/questions/77288308/
+  [I1]: https://paulstsmith.github.io/images/class/method.gif

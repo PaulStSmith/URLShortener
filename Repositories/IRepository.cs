@@ -4,22 +4,22 @@ namespace URLShortener.Repositories
 {
 
     /// <summary>
-    /// Describes a repository for <see cref="T"/>.
+    /// Describes a repository for <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of the elements of the repository.</typeparam>
     public interface IRepository<T> where T : IEntity
     {
         /// <summary>
-        /// Adds the specified <see cref="T"/> to the repository.
+        /// Adds the specified <typeparamref name="T"/> to the repository.
         /// </summary>
-        /// <param name="value">The <see cref="T"/> to be added in the repository.</param>
-        public void Add(T value);
+        /// <param name="value">The <typeparamref name="T"/> to be added in the repository.</param>
+        public T Add(T value);
 
         /// <summary>
-        /// Updates the specified <see cref="T"/> in the repository.
+        /// Updates the specified <typeparamref name="T"/> in the repository.
         /// </summary>
         /// <param name="value"></param>
-        public void Update(T value);
+        public T Update(T value);
 
         /// <summary>
         /// Returns all elements in the repository.
@@ -41,9 +41,9 @@ namespace URLShortener.Repositories
         public void DeleteById(int id);
 
         /// <summary>
-        /// Deletes the specified <see cref="T"/>.
+        /// Deletes the specified <typeparamref name="T"/>.
         /// </summary>
-        /// <param name="value">The <see cref="T"/> to be deleted</param>
+        /// <param name="value">The <typeparamref name="T"/> to be deleted</param>
         public void Delete(T value);
 
         /// <summary>

@@ -65,8 +65,7 @@ namespace URLShortener.Model
         {
             get
             {
-                if (_shortUrlLength == null)
-                    _shortUrlLength = Program.App.Configuration.GetValue<int>("shortUrlLength", 6);
+                _shortUrlLength ??= Program.App.Configuration.GetValue<int>("shortUrlLength", 6);
 
                 return (int)_shortUrlLength;
             }
@@ -86,5 +85,37 @@ namespace URLShortener.Model
             return sb.ToString();
         }
         private const string Alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+        /// <summary>
+        /// Implicitly converts <see cref="ShortUrlModel"/> to <see cref="ShortUrlDTO"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="ShortUrlModel"/> to be converted to <see cref="ShortUrlDTO"/>.</param>
+        public static implicit operator ShortUrlDTO(ShortUrlModel model)
+        {
+            return new ShortUrlDTO
+            {
+                Id = model.Id.ToString(),
+                Url = model.Url,
+                Hits = model.Hits,
+                ShortUrl = Path.Combine(Program.ShortUrlBase, model.ShortUrl),
+                DateCreated = model.DateCreated,
+            };
+        }
+
+        /// <summary>
+        /// Implicitly converts <see cref="ShortUrlDTO"/> to <see cref="ShortUrlModel"/>.
+        /// </summary>
+        /// <param name="dto">The <see cref="ShortUrlDTO"/> to be converted to <see cref="ShortUrlModel"/>.</param>
+        public static implicit operator ShortUrlModel(ShortUrlDTO dto)
+        {
+            return new ShortUrlModel() 
+            { 
+                Id = int.Parse(dto.Id),
+                Url = dto.Url,
+                Hits = dto.Hits,
+                ShortUrl = Path.GetFileName(dto.ShortUrl),
+                DateCreated = dto.DateCreated,
+            };
+        }
     }
 }

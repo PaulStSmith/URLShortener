@@ -10,24 +10,25 @@ namespace URLShortener.Repositories
 {
 
     /// <summary>
-    /// Represents a repository for <see cref="T"/>.
+    /// Represents a repository for <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of the elements of the repository.</typeparam>
     public class Repository<T> : IRepository<T>  where T : IEntity
     {
         /// <summary>
-        /// Adds the specified <see cref="T"/> to the repository.
+        /// Adds the specified <typeparamref name="T"/> to the repository.
         /// </summary>
-        /// <param name="value">The <see cref="T"/> to be added in the repository.</param>
-        public void Add(T value)
+        /// <param name="value">The <typeparamref name="T"/> to be added in the repository.</param>
+        public T Add(T value)
         {
             ExecDB((s) => { s.Save(value); });
+            return value;
         }
 
         /// <summary>
-        /// Deletes the specified <see cref="T"/>.
+        /// Deletes the specified <typeparamref name="T"/>.
         /// </summary>
-        /// <param name="value">The <see cref="T"/> to be deleted</param>
+        /// <param name="value">The <typeparamref name="T"/> to be deleted</param>
         public void Delete(T value)
         {
             ExecDB((s) => { s.Delete(value); });
@@ -70,12 +71,13 @@ namespace URLShortener.Repositories
         }
 
         /// <summary>
-        /// Updates the specified <see cref="T"/> in the repository.
+        /// Updates the specified <typeparamref name="T"/> in the repository.
         /// </summary>
         /// <param name="value"></param>
-        public void Update(T value)
+        public T Update(T value)
         {
             ExecDB((s) => { s.Update(value); });
+            return value;
         }
 
         /// <summary>
@@ -93,15 +95,16 @@ namespace URLShortener.Repositories
         /// <param name="action">The <see cref="Action"/> to be executed.</param>
         protected void ExecDB(Action<NHibernate.ISession> action)
         {
-            using (var s = Program.SessionFactory.OpenSession())
-            using (var t = s.BeginTransaction())
-                ExecDB(() => action(s), t);
+            using var s = Program.SessionFactory.OpenSession();
+            using var t = s.BeginTransaction();
+            ExecDB(() => action(s), t);
         }
 
         /// <summary>
         /// Executes the specified <see cref="Action"/> within the specified <see cref="ITransaction"/>.
         /// </summary>
         /// <param name="action">The <see cref="Action"/> to be executed.</param>
+        /// <param name="transaction">An <see cref="ITransaction"/> object within which the action will be executed.</param>
         protected void ExecDB(Action action, ITransaction transaction)
         {
             try

@@ -10,6 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLShortnerValidator", "URLShortnerValidator\URLShortnerValidator.csproj", "{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC} = {6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +25,10 @@ Global
 		{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,7 +7,28 @@
     <UserSecretsId>d8c43fa0-a42e-4383-b842-f51665c232e7</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>URL Shortner</Title>
+    <Authors>Paulo Santos</Authors>
+    <Copyright>GNU General Public License v3.0</Copyright>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/PaulStSmith/URLShortener</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="URLShortnerValidator\**" />
+    <Compile Remove="Views\**" />
+    <Content Remove="URLShortnerValidator\**" />
+    <Content Remove="Views\**" />
+    <EmbeddedResource Remove="URLShortnerValidator\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <None Remove="URLShortnerValidator\**" />
+    <None Remove="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Data\urls.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="wwwroot\404.html" />
@@ -25,13 +46,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\" />
+    <None Include="Data\urls.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="wwwroot\NotFound\404.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReadMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
