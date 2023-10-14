@@ -16,7 +16,7 @@ namespace URLShortener.Controllers
         /// <param name="url">The URL being added.</param>
         /// <returns>An instance of the <see cref="IShortUrlModel"/>.</returns>
         [HttpPost]
-        [Route("/Add/{url}")]
+        [Route("/Add")]
         public IActionResult Add(string url)
         {
             return TryExecuteFunc(() => {
@@ -77,7 +77,7 @@ namespace URLShortener.Controllers
         /// <param name="id">The id of a short URL.</param>
         /// <returns>The short URL information with the specified <paramref name="id"/>.</returns>
         [HttpGet]
-        [Route("/Get/{id}")]
+        [Route("/ById/{id}")]
         public IActionResult GetById(int id)
         {
             return TryExecuteFunc(() =>
