@@ -226,11 +226,11 @@ All other end points call be executed from ```Swagger```.
 |-------------|------|-------------|----------------------------|
 |[![][i1]][I1]| GET  | /{shortUrl} | Redirects to the long URL. |
 |[![][i1]][I1]| POST | /Add        | Adds a long URL to the repository \
-                                     Parameters:
-                                        ```url``` : _string_ : Any Uniform Resource Locator \
-                                     \
-                                     Returns:
-                                        ```ShortUrlDTO``` : _JSON_ : A Data Transfer Object that represents the added URL |
+Parameters:
+```url``` : _string_ : Any Uniform Resource Locator \
+\
+Returns:
+```ShortUrlDTO``` : _JSON_ : A Data Transfer Object that represents the added URL |
 
 
 # Known problems
