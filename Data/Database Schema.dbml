@@ -1,0 +1,16 @@
+/*
+ * Paulo Santos
+ * 12.OCt.2023
+ *
+ * Database definition written in DBML
+ * DBML Documentation: https://dbml.dbdiagram.io/docs/
+ */
+Table ShortUrls {
+  id          int           [pk, 
+                             not null, 
+                             increment]
+  hits        int
+  url         varchar(255)  [not null]
+  shortUrl    varchar(16)   [not null, unique]
+  dateCreated datetime      [default: `current_timestamp`]
+}
