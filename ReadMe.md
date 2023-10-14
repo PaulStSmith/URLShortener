@@ -5,6 +5,7 @@ This was created as a reply to a challenge issued by Mottu (https://mottu.com.br
 Here's the original challenge (in Portuguese):
 
 <hr/>
+
 # Desafio Backend - Encurtador de URL
 
 ## _se divirta!
@@ -56,7 +57,7 @@ Alguns critérios de aceitação serão validados para conclusão do projeto.
 ## Anexos
 
 ## urls.json
-
+```
 [
   { 
    "id": "23094", 
@@ -121,13 +122,15 @@ Alguns critérios de aceitação serão validados para conclusão do projeto.
     "shortUrl": "http://chr.dc/9opw2" 
   }
 ]
+```
+
 <hr/>
 
 # The development environment
 
-This URL shortener was developed using Visual Studio 2022 Community Edition, configured to run in Docker Desktop (configure as Linux).
+This URL shortener was developed using _Visual Studio 2022 Community Edition_, configured to run in _Docker Desktop_ (configured as Linux).
 
-The Docker configuration is the default for a WebAPI project. No change was made to the ```Dockerfile```.
+The _Docker_ configuration is the default for a WebAPI project. No change was made to the ```Dockerfile```.
 
 # Preparing the database
 
@@ -162,7 +165,7 @@ Once you find this, change its value to the appropriated Connection String for y
 
 In this project I used _NHibernate_ (https://nhibernate.info/) for database connection. It's a personal preference due the fact that I've been using it for a long time now.
 
-In the ```appsettings.json``` file, locate se section named “Hibernate”, and within it there are two values that need to be changed, according to the following table:
+In the ```appsettings.json``` file, locate the section named “Hibernate”, and within it there are two values that need to be changed, according to the following table:
 
 | DBMS       | Driver                            | Dialect                              |
 |------------|-----------------------------------|--------------------------------------|
@@ -180,14 +183,14 @@ If you're using a different database, you will need to change the ```generator``
 
 **MySQL and SQL Server**
 ```
-&lt;generator class="identity"/&gt;
+<generator class="identity"/>
 ```
 
 **PostgreSQL**
 ```
-&lt;generator class="sequence"&gt;
-    &lt;param name="sequence"&gt;&quot;ShortUrls_id_seq&quot;&lt;/param&gt;
-&lt;/generator&gt;
+<generator class="sequence">
+    <param name="sequence">&quot;ShortUrls_id_seq&quot;</param>
+</generator>
 ```
 
 Further reference can be found [here][A1].
@@ -206,14 +209,13 @@ After consuming the JSON file, it will be renamed to ```urls.json.old``` with a 
 
 # Executing the URL Shortener
 
-This project depends on the Docker Desktop, that needs to be installed in the machine that will execute this project.
+This project depends on the _Docker Desktop_, that needs to be installed in the machine that will execute this project.
 
-Once the project has been loaded in the Visual Studio, simply start the execution, Visual Studio will take care of the Docker installation, configuration, and execution.
+Once the project has been loaded in the _Visual Studio_, simply start the execution, _Visual Studio_ will take care of the _Docker_ installation, configuration, and execution.
 
 Afterwards your default browser will open with an instance of ```Swagger``` that allows you to try executing each one of the endpoints.
 
-Calling the ```Get `/{shortUrl}` ``` from the ```Swagger``` with a valid short URL will result in an error, as this call assumes a user is calling from a browser.
-
+Calling the ```Get `/{shortUrl}` ``` from the ```Swagger``` with or without a valid short URL will result in an error, as this call assumes a user is calling from a browser.
 In a browser that call will redirect the user to the proper URL, and add the hits counter for that short URL.
 
 All other end points call be executed from ```Swagger```.
