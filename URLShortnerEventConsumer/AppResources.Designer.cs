@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace URLShortenerValidator {
+namespace URLShortenerEventConsumer {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace URLShortenerValidator {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("URLShortenerValidator.AppResources", typeof(AppResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("URLShortenerEventConsumer.AppResources", typeof(AppResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,12 +66,11 @@ namespace URLShortenerValidator {
         ///| |_| |   / |__\__ \ &apos; \/ _ \ &apos;_|  _| &apos; \/ -_) &apos;_|
         /// \___/|_|_\____|___/_||_\___/_|  \__|_||_\___|_|  
         ///                                                  
-        ///__   __    _ _    _      _           
-        ///\ \ / /_ _| (_)__| |__ _| |_ ___ _ _ 
-        /// \ V / _` | | / _` / _` |  _/ _ \ &apos;_|
-        ///  \_/\__,_|_|_\__,_\__,_|\__\___/_|  
-        ///                                     
-        ///Paulo Santos - October.2023.
+        /// ___             _      ___                                
+        ///| __|_ _____ _ _| |_   / __|___ _ _  ____  _ _ __  ___ _ _ 
+        ///| _|\ V / -_) &apos; \  _| | (__/ _ \ &apos; \(_-&lt; || | &apos;  \/ -_) &apos;_|
+        ///|___|\_/\___|_||_\__|  \___\___/_||_/__/\_,_|_|_|_\___|_|  
+        ///         [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Banner {
             get {

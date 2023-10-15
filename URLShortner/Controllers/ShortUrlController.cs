@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Net;
+using System.Text.Json;
+using URLShortener.Common.Model;
 using URLShortener.Messages;
 using URLShortener.Model;
 
@@ -15,45 +17,10 @@ namespace URLShortener.Controllers
         private readonly IHubContext<MessageHub> HubContext;
 
         /// <summary>
-        /// Default constructor.
-        /// </summary>
-        private ShortUrlController() 
-        {
-            Program.ShortUrlRepository.ItemAdded += ShortUrlRepository_ItemAdded;
-            Program.ShortUrlRepository.ItemUpdated += ShortUrlRepository_ItemUpdated;
-            Program.ShortUrlRepository.ItemDeleted += ShortUrlRepository_ItemDeleted;
-        }
-
-        private void ShortUrlRepository_ItemDeleted(object? sender, Repositories.Repository<ShortUrlModel>.ItemDeletedEventArgs e)
-        {
-            MessageHub.Instance.Send("ItemDeleted", e.Item);
-        }
-
-        private void ShortUrlRepository_ItemUpdated(object? sender, Repositories.Repository<ShortUrlModel>.ItemUpdatedEventArgs e)
-        {
-            #pragma warning disable CS8604 // Possible null reference argument.
-            MessageHub.Instance.Send("ItemUpdated", e.OldItem, e.Item);
-            #pragma warning restore CS8604 // Possible null reference argument.
-        }
-
-        private void ShortUrlRepository_ItemAdded(object? sender, Repositories.Repository<ShortUrlModel>.ItemAddedEventArgs e)
-        {
-            MessageHub.Instance.Send("ItemAdded", e.Item);
-        }
-
-        /// <summary>
-        /// Destructor for this class.
-        /// </summary>
-        ~ShortUrlController()
-        {
-
-        }
-
-        /// <summary>
         /// Dependency injection constructor.
         /// </summary>
         /// <param name="hubContext">An instance of an object that implements <see cref="IHubContext{THub}"/>.</param>
-        public ShortUrlController(IHubContext<MessageHub> hubContext) : this() => this.HubContext = hubContext;
+        public ShortUrlController(IHubContext<MessageHub> hubContext) => this.HubContext = hubContext;
 
         /// <summary>
         /// Adds a new URL to the repository.
@@ -66,6 +33,7 @@ namespace URLShortener.Controllers
         {
             return TryExecuteFunc(() => {
                 var model = Program.ShortUrlRepository.Add(url);
+                SendMessage("ItemAdded", model);
                 return Ok((ShortUrlDTO)model);
             });
         }
@@ -84,20 +52,26 @@ namespace URLShortener.Controllers
                 if (model == null)
                     throw new ArgumentNullException(nameof(model));
 
+                ShortUrlModel oldValue;
                 var m = Program.ShortUrlRepository.GetByShortUrl(model.ShortUrl);
                 if (m == null)
                 {
                     m = Program.ShortUrlRepository.GetById(int.Parse(model.Id));
                     if (m == null)
                         return NotFound();
+                    else
+                        oldValue = (ShortUrlModel)m.Clone();
 
                     m.ShortUrl = model.ShortUrl;
                 }
+                else
+                    oldValue = (ShortUrlModel)m.Clone();
 
                 m.Url = model.Url;
-                Program.ShortUrlRepository.Update(m);
+                var newValue = Program.ShortUrlRepository.Update(m);
 
-                return Ok((ShortUrlDTO)m);
+                SendMessage("ItemUpdated", oldValue, newValue);
+                return Ok((ShortUrlDTO)newValue);
             });
         }
 
@@ -184,8 +158,7 @@ namespace URLShortener.Controllers
                 if (model == null)
                     return NotFound();
 
-                Program.ShortUrlRepository.Delete(model);
-                return Ok();
+                return Delete(model.Id);
             });
         }
 
@@ -204,6 +177,7 @@ namespace URLShortener.Controllers
                     return NotFound();
 
                 Program.ShortUrlRepository.Delete(model);
+                SendMessage("ItemDeleted", model);
                 return Ok();
             });
         }
@@ -235,6 +209,34 @@ namespace URLShortener.Controllers
 
                 return StatusCode((int)resp.StatusCode, resp.StatusCode.ToString());
             });
+        }
+
+        /// <summary>
+        /// Sends the specified message to subscribers.
+        /// </summary>
+        /// <param name="messageId">The message to be sent.</param>
+        private void SendMessage(string messageId) => SendMessage(messageId, null);
+
+        /// <summary>
+        /// Sends the specified message to subscribers.
+        /// </summary>
+        /// <param name="messageId">The message to be sent.</param>
+        /// <param name="item">A <see cref="ShortUrlModel"/> corresponting to the message.</param>
+        private void SendMessage(string messageId, ShortUrlDTO? item) => SendMessage(messageId, item, null);
+
+        /// <summary>
+        /// Sends the specified message to subscribers.
+        /// </summary>
+        /// <param name="messageId">The message to be sent.</param>
+        /// <param name="item1">A <see cref="ShortUrlModel"/> corresponting to the message.</param>
+        /// <param name="item2">A <see cref="ShortUrlModel"/> corresponting to the message.</param>
+        private void SendMessage(string messageId, ShortUrlDTO? item1, ShortUrlDTO? item2)
+        {
+            string? jsonItem1 = item1 == null ? null : JsonSerializer.Serialize(item1);
+            string? jsonItem2 = item1 == null ? null : JsonSerializer.Serialize(item2);
+            if (item1 == null) HubContext.Clients?.All.SendAsync(messageId);
+            if (item2 == null) HubContext.Clients?.All.SendAsync(messageId, jsonItem1);
+            HubContext.Clients?.All.SendAsync(messageId, jsonItem1, jsonItem2);
         }
 
         /// <summary>

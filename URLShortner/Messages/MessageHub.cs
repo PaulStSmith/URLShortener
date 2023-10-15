@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.ComponentModel;
+using URLShortener.Common.Model;
 using URLShortener.Model;
 
 namespace URLShortener.Messages
@@ -9,7 +10,7 @@ namespace URLShortener.Messages
     /// </summary>
     public class MessageHub : Hub
     {
-        private static readonly Lazy<MessageHub> _Instance = new Lazy<MessageHub>(() => new MessageHub());
+        private static readonly Lazy<MessageHub> _Instance = new(() => new MessageHub());
 
         /// <summary>
         /// Gets a singleton instance for this class.
@@ -28,6 +29,8 @@ namespace URLShortener.Messages
             if (Clients == null)
                 return Task.CompletedTask;
 
+            if (value1 == null) return Clients.All.SendAsync(messageId);
+            if (value2 == null) return Clients.All.SendAsync(messageId, value1);
             return Clients.All.SendAsync(messageId, value1, value2);
         }
 

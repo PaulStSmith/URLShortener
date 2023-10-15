@@ -1,4 +1,4 @@
-﻿using URLShortener.Model;
+﻿using URLShortener.Common.Model;
 
 namespace URLShortener.Repositories
 {

@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
+using URLShortener.Common.Model;
+using Microsoft.Extensions.Configuration;
 
 #pragma warning disable CS8603 // Possible null reference return.
 
-namespace URLShortnerValidator
+namespace URLShortenerValidator
 {
     /// <summary>
     /// Main class.
@@ -22,7 +23,7 @@ namespace URLShortnerValidator
         public static string UrlShortnerApiUrl => Configuration["apiUrl"] ?? "";
 
         /// <summary>
-        /// Default Constructor.
+        /// Type Constructor.
         /// </summary>
         static Program() 
         {
@@ -39,8 +40,7 @@ namespace URLShortnerValidator
         static void Main()
         {
             Console.WriteLine(AppResources.Banner);
-            Console.WriteLine("Awaiting API service to start.");
-            Console.WriteLine();
+            WaitAPI();
 
             Thread.Sleep(new TimeSpan(0, 0, 20));
 
@@ -71,6 +71,22 @@ namespace URLShortnerValidator
                 Console.WriteLine($@"{{{e.GetType}}}");
                 Console.WriteLine($@"{e.Message}");
             }
+        }
+
+        /// <summary>
+        /// Waits 20 seconds for the API to come up.
+        /// </summary>
+        private static void WaitAPI()
+        {
+            var nSec = 20;
+            var tmr = new System.Timers.Timer(1000);
+            tmr.Elapsed += (s, e) => { Console.Write($"Awaiting API service to start ({nSec--}).   \r"); };
+            Console.WriteLine();
+            tmr.Start();
+            while (nSec > 0)
+                Thread.Sleep(1);
+            tmr.Stop();
+            Console.WriteLine(new string(' ', 40));
         }
 
         /// <summary>

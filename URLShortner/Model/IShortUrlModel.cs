@@ -1,9 +1,11 @@
-﻿namespace URLShortener.Model
+﻿using URLShortener.Common.Model;
+
+namespace URLShortener.Model
 {
     /// <summary>
     /// Describes a URL and its shortened version.
     /// </summary>
-    public interface IShortUrlModel : IItem
+    public interface IShortUrlModel : IItem, IEquatable<IShortUrlModel>
     {
         /// <summary>
         /// Gets the date the URL was created.

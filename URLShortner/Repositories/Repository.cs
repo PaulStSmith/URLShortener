@@ -4,7 +4,7 @@ using NHibernate;
 using NHibernate.Linq;
 using NHibernate.Mapping;
 using System.Collections.Immutable;
-using URLShortener.Model;
+using URLShortener.Common.Model;
 
 namespace URLShortener.Repositories
 {
@@ -37,7 +37,7 @@ namespace URLShortener.Repositories
         public T Add(T value)
         {
             ExecDB((s) => { s.Save(value); });
-            ItemAdded.Invoke(this, new ItemAddedEventArgs(value));
+            ItemAdded?.Invoke(this, new ItemAddedEventArgs(value));
             return value;
         }
 
@@ -48,7 +48,7 @@ namespace URLShortener.Repositories
         public void Delete(T? value)
         {
             if (value == null) return;
-            ItemDeleted.Invoke(this, new ItemDeletedEventArgs(value));
+            ItemDeleted?.Invoke(this, new ItemDeletedEventArgs(value));
             ExecDB((s) => { s.Delete(value); });
         }
 
@@ -96,7 +96,7 @@ namespace URLShortener.Repositories
         {
             var oldValue = (T?)value.Clone();
             ExecDB((s) => { s.Update(value); });
-            ItemUpdated.Invoke(this, new ItemUpdatedEventArgs(oldValue, value));
+            ItemUpdated?.Invoke(this, new ItemUpdatedEventArgs(oldValue, value));
             return value;
         }
 

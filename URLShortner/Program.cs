@@ -1,8 +1,9 @@
 
+using NHibernate;
 using NHibernate.Exceptions;
-using NHibernate.Mapping.Attributes;
 using Npgsql;
 using System.Text.Json;
+using URLShortener.Common.Model;
 using URLShortener.Messages;
 using URLShortener.Model;
 using URLShortener.Repositories;
@@ -17,7 +18,7 @@ namespace URLShortener
         /// <summary>
         /// Gets or sets the <see cref="NHibernate.ISessionFactory"/>.
         /// </summary>
-        public static NHibernate.ISessionFactory SessionFactory { get; private set; }
+        public static ISessionFactory SessionFactory { get; private set; }
 
         /// <summary>
         /// Gets or sets the current <see cref="WebApplication"/>.

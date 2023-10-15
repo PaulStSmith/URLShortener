@@ -1,12 +1,13 @@
 ﻿using NHibernate.Mapping.Attributes;
 using System.Text;
+using URLShortener.Common.Model;
 
 namespace URLShortener.Model
 {
     /// <summary>
     /// Represents a URL and its shortened version.
     /// </summary>
-    public class ShortUrlModel : IShortUrlModel
+    public class ShortUrlModel : ItemModelBase, IShortUrlModel
     {
         /// <summary>
         /// Default constructor.
@@ -29,11 +30,6 @@ namespace URLShortener.Model
         /// </summary>
         /// <param name="url">The long URL to be shortened.</param>
         public ShortUrlModel(string url) : this(url, GenerateShortUrl()) { }
-
-        /// <summary>
-        /// Gets or sets an identifier for the URL.
-        /// </summary>
-        public virtual int Id { get; protected internal set; }
 
         /// <summary>
         /// Gets or sets the URL (Uniform Resource Locator).
@@ -90,7 +86,7 @@ namespace URLShortener.Model
         /// Returns a clone of thins instance.
         /// </summary>
         /// <returns>A clone of thins instance.</returns>
-        public virtual object Clone()
+        public override object Clone()
         {
             return new ShortUrlModel() {
                 Id = this.Id,
@@ -106,7 +102,7 @@ namespace URLShortener.Model
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
-        public virtual bool Equals(ShortUrlModel? other)
+        public virtual bool Equals(IShortUrlModel? other)
         {
             if (this.Id != other?.Id) return false;
             if (this.Url!= other?.Url) return false;
@@ -121,7 +117,7 @@ namespace URLShortener.Model
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
-        public override bool Equals(object? other) => this.Equals((ShortUrlModel?)other);
+        public override bool Equals(object? other) => this.Equals((IShortUrlModel?)other);
 
         /// <summary>Serves as the default hash function.</summary>
         /// <returns>A hash code for the current object.</returns>
