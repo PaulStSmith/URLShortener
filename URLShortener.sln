@@ -6,15 +6,17 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D7627A90-AAE2-4859-9DAD-1991F76E90DE}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		LICENSE.txt = LICENSE.txt
+		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLShortenerValidator", "URLShortnerValidator\URLShortenerValidator.csproj", "{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLShortener", "URLShortner\URLShortener.csproj", "{34E5BA24-78D2-4602-997F-4B2CF419B41C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLShortenerEventConsumer", "URLShortnerEventConsumer\URLShortenerEventConsumer.csproj", "{8601A558-967A-4B24-997D-E2A61F4FDBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLShortenerEventConsumer", "URLShortnerEventConsumer\URLShortenerEventConsumer.csproj", "{8601A558-967A-4B24-997D-E2A61F4FDBCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLShortener.Common", "URLShortener.Common\URLShortener.Common.csproj", "{7FEDB264-F904-4A2E-BE81-D3E4D04A57C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLShortener.Common", "URLShortener.Common\URLShortener.Common.csproj", "{7FEDB264-F904-4A2E-BE81-D3E4D04A57C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -205,7 +205,7 @@ At the beginning of the execution, if this file is located at the proper folder,
 
 Any exception or impossibility of adding any URL to the database will be logged to the file `urls_json.log`, in the same directory.
 
-After consuming the JSON file, it will be renamed to `urls.json.old` with a sequential number if the `.old` file already exists.
+After consuming the JSON file, it will be renamed to `urls.old` with a sequential number if the `.old` file already exists.
 
 # Executing the URL Shortener
 
@@ -241,7 +241,7 @@ All other end points call be executed from `Swagger`.
 
 This API uses the following Data Transfer Object:
 
-``` jscript
+``` js
 {
  "id"          // int    : The identifier of the short URL.
  "url"         // string : The Uniform Resource Locator that the short URL points to.
@@ -251,3 +251,27 @@ This API uses the following Data Transfer Object:
 }
 ```
 
+# Events
+
+## Event Messages
+
+The URL Shortener API uses [SignalR][E1] to broadcast event messages each time a short URL is created, updated, or deleted, as shown in the table below.
+
+| Message       | Payload                                  | Sent when a short URL is...      |
+|---------------|------------------------------------------|----------------------------------|
+| `ItemAdded`   | JSON of the added item                   | ... added to the repository.     |
+| `ItemUpdated` | JSON of the old item and of the new item | ... updated in the repository.   |
+| `ItemDeleted` | JSON of the deleted item                 | ... deleted from the repository. |
+
+   [E1]: https://learn.microsoft.com/en-us/aspnet/signalr/overview/getting-started/introduction-to-signalr
+
+## Event Handlers
+
+The `ShortUrlRepository` also have plain old events, if it's the case of plugging event handlers directly to it.
+
+# Other Projects
+
+Within the solution there are two other projects:
+
+* `URLShortenerValidator` : uses the endpoints of the URLShortner API to list all short URL and check the status of each one.
+* `UrlShortenerEventConsumer` : uses SignalR to llisten from messages emitted by the URLShortner API and print it to the console.

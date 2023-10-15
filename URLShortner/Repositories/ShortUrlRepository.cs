@@ -1,4 +1,5 @@
-﻿using URLShortener.Model;
+﻿using NHibernate;
+using URLShortener.Model;
 
 namespace URLShortener.Repositories
 {
@@ -47,9 +48,15 @@ namespace URLShortener.Repositories
         /// Deletes the specified <paramref name="shortUrl"/> from the repository.
         /// </summary>
         /// <param name="shortUrl">The short URL to be deleted.</param>
-        public void DeleteByShortUrl(string shortUrl) 
+        public void DeleteByShortUrl(string shortUrl) => DeleteByShortUrl(shortUrl, ei);
+
+        /// <summary>
+        /// Deletes the specified <paramref name="shortUrl"/> from the repository.
+        /// </summary>
+        /// <param name="shortUrl">The short URL to be deleted.</param>
+        internal void DeleteByShortUrl(string shortUrl, IInterceptor interceptor) 
         {
-            ExecDB((s) => s.Delete(GetByShortUrl(shortUrl)));
+            ExecDB((s) => s.Delete(GetByShortUrl(shortUrl)), interceptor);
         }
     }
 }

@@ -1,4 +1,3 @@
-
 using NHibernate;
 using NHibernate.Exceptions;
 using Npgsql;
@@ -69,9 +68,8 @@ namespace URLShortener
         {
             // Configure NHibernate
             var cfg = new NHibernate.Cfg.Configuration();
-            var nHibernateSection = App.Configuration.GetSection("Hibernate");
-            cfg.SetProperty(NHibernate.Cfg.Environment.Dialect, nHibernateSection.GetValue<string>("dialect"));
-            cfg.SetProperty(NHibernate.Cfg.Environment.ConnectionDriver, nHibernateSection.GetValue<string>("driver"));
+            cfg.SetProperty(NHibernate.Cfg.Environment.Dialect, App.Configuration["NHibernate:dialect"]);
+            cfg.SetProperty(NHibernate.Cfg.Environment.ConnectionDriver, App.Configuration["NHibernate:driver"]);
             cfg.SetProperty(NHibernate.Cfg.Environment.ConnectionString, App.Configuration.GetConnectionString("db"));
             using (var str = new FileStream("NHibernate.map.xml", FileMode.Open))
                 cfg.AddInputStream(str);
@@ -171,26 +169,37 @@ namespace URLShortener
             {
                 var cvt = JsonSerializer.Deserialize<ShortUrlDTO[]>(reader.ReadToEnd());
                 if (cvt != null)
-                    foreach (var dto in cvt)
+                foreach (var dto in cvt)
+                {
+                    try
                     {
-                        try
-                        {
-                            dto.DateCreated = DateTime.Now;
-                            ShortUrlRepository.Add(dto);
-                            numInserted += 1;
-                        }
-                        catch (GenericADOException e)
-                        {
-                            if ((e.InnerException?.GetType() == typeof(PostgresException)) && e.InnerException.Message.StartsWith("23505"))
-                                logger.WriteLine($@"    Attempt to insert duplicated values: {JsonSerializer.Serialize(dto)}");
-                            else
-                                throw;
-                        }
-                        catch
-                        {
-                            throw;
-                        }
+                        dto.DateCreated = DateTime.Now;
+                        ShortUrlRepository.Add(dto);
+                        numInserted += 1;
                     }
+                    catch (GenericADOException e)
+                    {
+                        if ((e.InnerException?.GetType() == typeof(PostgresException)) && e.InnerException.Message.StartsWith("23505"))
+                            logger.WriteLine($@"    Attempt to insert duplicated values: {JsonSerializer.Serialize(dto)}");
+                        else
+                            throw;
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                /*
+                 * Fix the sequence in PostgreSQL database
+                 */
+                if (App.Configuration["NHibernate:dialect"]?.Contains("Postgre", StringComparison.InvariantCultureIgnoreCase) ?? false)
+                {
+                    var newId = ShortUrlRepository.GetAll().OrderByDescending(x => x.Id).Select(x => x.Id).FirstOrDefault() + 1;
+                    using var s = SessionFactory.OpenSession();
+                    using var t = s.BeginTransaction();
+                    var q = s.CreateSQLQuery($@"SELECT setval('public.""ShortUrls_id_seq""', {newId}, true);");
+                    q.ExecuteUpdate();
+                }
             }
 
             return numInserted;
