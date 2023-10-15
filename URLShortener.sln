@@ -8,9 +8,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLShortener", "URLShortener\URLShortener.csproj", "{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLShortnerValidator", "URLShortnerValidator\URLShortnerValidator.csproj", "{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLShortener", "URLShortner\URLShortener.csproj", "{34E5BA24-78D2-4602-997F-4B2CF419B41C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLShortnerEventConsumer", "URLShortnerEventConsumer\URLShortnerEventConsumer.csproj", "{BD46A854-06CF-49AC-962A-CDB19E3992B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,14 +20,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D40FC6A-F669-4DE4-82A8-D5C8809D22BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24DA8C3F-640E-4F1E-B642-8B58B5D5300D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E5BA24-78D2-4602-997F-4B2CF419B41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E5BA24-78D2-4602-997F-4B2CF419B41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E5BA24-78D2-4602-997F-4B2CF419B41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E5BA24-78D2-4602-997F-4B2CF419B41C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD46A854-06CF-49AC-962A-CDB19E3992B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD46A854-06CF-49AC-962A-CDB19E3992B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD46A854-06CF-49AC-962A-CDB19E3992B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD46A854-06CF-49AC-962A-CDB19E3992B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
