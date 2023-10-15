@@ -215,7 +215,7 @@ Once the project has been loaded in the _Visual Studio_, simply start the execut
 
 Afterwards your default browser will open with an instance of `Swagger` that allows you to try executing each one of the endpoints.
 
-Calling the `Get `/{shortUrl}` ` from the `Swagger` with or without a valid short URL will result in an error, as this call assumes a user is calling from a browser.
+Calling the `Get /{shortUrl}` from the `Swagger` with or without a valid short URL will result in an error, as this call assumes a user is calling from a browser.
 In a browser that call will redirect the user to the proper URL, and add the hits counter for that short URL.
 
 All other end points call be executed from `Swagger`.
