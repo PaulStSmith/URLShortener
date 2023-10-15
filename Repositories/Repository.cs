@@ -13,8 +13,23 @@ namespace URLShortener.Repositories
     /// Represents a repository for <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of the elements of the repository.</typeparam>
-    public class Repository<T> : IRepository<T>  where T : IEntity
+    public partial class Repository<T> : IRepository<T>  where T : IItem
     {
+        /// <summary>
+        /// Raised every time an item is added to the repository.
+        /// </summary>
+        public event EventHandler<ItemAddedEventArgs> ItemAdded;
+
+        /// <summary>
+        /// Raised every time an item is updated to the repository.
+        /// </summary>
+        public event EventHandler<ItemUpdatedEventArgs> ItemUpdated;
+
+        /// <summary>
+        /// Raised every time an item is deleted to the repository.
+        /// </summary>
+        public event EventHandler<ItemDeletedEventArgs> ItemDeleted;
+
         /// <summary>
         /// Adds the specified <typeparamref name="T"/> to the repository.
         /// </summary>
@@ -22,6 +37,7 @@ namespace URLShortener.Repositories
         public T Add(T value)
         {
             ExecDB((s) => { s.Save(value); });
+            ItemAdded.Invoke(this, new ItemAddedEventArgs(value));
             return value;
         }
 
@@ -29,8 +45,10 @@ namespace URLShortener.Repositories
         /// Deletes the specified <typeparamref name="T"/>.
         /// </summary>
         /// <param name="value">The <typeparamref name="T"/> to be deleted</param>
-        public void Delete(T value)
+        public void Delete(T? value)
         {
+            if (value == null) return;
+            ItemDeleted.Invoke(this, new ItemDeletedEventArgs(value));
             ExecDB((s) => { s.Delete(value); });
         }
 
@@ -48,7 +66,7 @@ namespace URLShortener.Repositories
         /// <param name="id">The id of the element to delete.</param>
         public void DeleteById(int id)
         {
-            ExecDB((s) => { s.Delete(GetById(id)); });
+            Delete(GetById(id));
         }
 
         /// <summary>
@@ -76,7 +94,9 @@ namespace URLShortener.Repositories
         /// <param name="value"></param>
         public T Update(T value)
         {
+            var oldValue = (T?)value.Clone();
             ExecDB((s) => { s.Update(value); });
+            ItemUpdated.Invoke(this, new ItemUpdatedEventArgs(oldValue, value));
             return value;
         }
 

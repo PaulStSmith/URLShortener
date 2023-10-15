@@ -87,6 +87,47 @@ namespace URLShortener.Model
         private const string Alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
         /// <summary>
+        /// Returns a clone of thins instance.
+        /// </summary>
+        /// <returns>A clone of thins instance.</returns>
+        public virtual object Clone()
+        {
+            return new ShortUrlModel() {
+                Id = this.Id,
+                Url = this.Url,
+                Hits = this.Hits,
+                ShortUrl = this.ShortUrl,
+                DateCreated = this.DateCreated,
+            };
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
+        public virtual bool Equals(ShortUrlModel? other)
+        {
+            if (this.Id != other?.Id) return false;
+            if (this.Url!= other?.Url) return false;
+            if (this.Hits != other?.Hits) return false;
+            if (this.ShortUrl != other?.ShortUrl) return false;
+            if (this.DateCreated != other?.DateCreated) return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
+        public override bool Equals(object? other) => this.Equals((ShortUrlModel?)other);
+
+        /// <summary>Serves as the default hash function.</summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => this.ShortUrl.GetHashCode();
+
+        /// <summary>
         /// Implicitly converts <see cref="ShortUrlModel"/> to <see cref="ShortUrlDTO"/>.
         /// </summary>
         /// <param name="model">The <see cref="ShortUrlModel"/> to be converted to <see cref="ShortUrlDTO"/>.</param>

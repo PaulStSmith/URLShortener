@@ -61,7 +61,7 @@ namespace URLShortnerValidator {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _   _ ___ _    ___ _            _                
+        ///   Looks up a localized string similar to  _   _ ___ _    ___ _            _                
         ///| | | | _ \ |  / __| |_  ___ _ _| |_ _ _  ___ _ _ 
         ///| |_| |   / |__\__ \ &apos; \/ _ \ &apos;_|  _| &apos; \/ -_) &apos;_|
         /// \___/|_|_\____|___/_||_\___/_|  \__|_||_\___|_|  
@@ -71,8 +71,9 @@ namespace URLShortnerValidator {
         /// \ V / _` | | / _` / _` |  _/ _ \ &apos;_|
         ///  \_/\__,_|_|_\__,_\__,_|\__\___/_|  
         ///                                     
-        ///Paulo Santos
-        ///October.2023.
+        ///Paulo Santos - October.2023
+        ///
+        ///.
         /// </summary>
         internal static string Banner {
             get {

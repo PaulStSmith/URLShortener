@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Net;
+using URLShortener.Messages;
 using URLShortener.Model;
 
 namespace URLShortener.Controllers
@@ -10,6 +12,49 @@ namespace URLShortener.Controllers
     [ApiController]
     public class ShortUrlController : ControllerBase
     {
+        private readonly IHubContext<MessageHub> HubContext;
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        private ShortUrlController() 
+        {
+            Program.ShortUrlRepository.ItemAdded += ShortUrlRepository_ItemAdded;
+            Program.ShortUrlRepository.ItemUpdated += ShortUrlRepository_ItemUpdated;
+            Program.ShortUrlRepository.ItemDeleted += ShortUrlRepository_ItemDeleted;
+        }
+
+        private void ShortUrlRepository_ItemDeleted(object? sender, Repositories.Repository<ShortUrlModel>.ItemDeletedEventArgs e)
+        {
+            MessageHub.Instance.Send("ItemDeleted", e.Item);
+        }
+
+        private void ShortUrlRepository_ItemUpdated(object? sender, Repositories.Repository<ShortUrlModel>.ItemUpdatedEventArgs e)
+        {
+            #pragma warning disable CS8604 // Possible null reference argument.
+            MessageHub.Instance.Send("ItemUpdated", e.OldItem, e.Item);
+            #pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        private void ShortUrlRepository_ItemAdded(object? sender, Repositories.Repository<ShortUrlModel>.ItemAddedEventArgs e)
+        {
+            MessageHub.Instance.Send("ItemAdded", e.Item);
+        }
+
+        /// <summary>
+        /// Destructor for this class.
+        /// </summary>
+        ~ShortUrlController()
+        {
+
+        }
+
+        /// <summary>
+        /// Dependency injection constructor.
+        /// </summary>
+        /// <param name="hubContext">An instance of an object that implements <see cref="IHubContext{THub}"/>.</param>
+        public ShortUrlController(IHubContext<MessageHub> hubContext) : this() => this.HubContext = hubContext;
+
         /// <summary>
         /// Adds a new URL to the repository.
         /// </summary>
@@ -129,7 +174,7 @@ namespace URLShortener.Controllers
         /// </summary>
         /// <param name="shortUrl">The short URL being deleted.</param>
         [HttpDelete]
-        [Route("/{shortUrl}")]
+        [Route("/ByShortUrl/{shortUrl}")]
         public IActionResult Delete(string shortUrl)
         {
             return TryExecuteFunc(() =>
@@ -216,7 +261,8 @@ namespace URLShortener.Controllers
         /// <returns>A sanitized version of the short URL.</returns>
         private static string SanitizeShortUrl(string shortUrl) 
         {
-            return shortUrl.StartsWith(Program.ShortUrlBase, StringComparison.InvariantCultureIgnoreCase) ? shortUrl[Program.ShortUrlBase.Length..] : shortUrl;
+            shortUrl = WebUtility.UrlDecode(shortUrl);
+            return Path.GetFileName(shortUrl);
         }
     }
 }

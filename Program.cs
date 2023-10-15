@@ -2,9 +2,8 @@
 using NHibernate.Exceptions;
 using NHibernate.Mapping.Attributes;
 using Npgsql;
-using System.Reflection;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using URLShortener.Messages;
 using URLShortener.Model;
 using URLShortener.Repositories;
 
@@ -52,9 +51,7 @@ namespace URLShortener
         public static void Main(string[] args)
         {
             CreateWebApplication(args);
-
             ConfigureApplication();
-
             ConfigureNHibernate();
 
             // Load url.json
@@ -92,9 +89,15 @@ namespace URLShortener
                 App.UseSwaggerUI();
             }
             App.UseHttpsRedirection();
+            App.UseRouting();
             App.UseAuthorization();
             App.MapControllers();
             App.UseStaticFiles();
+            App.UseFileServer();
+            App.UseEndpoints(ep =>
+            {
+                ep.MapHub<MessageHub>(App.Configuration["messageHub"] ?? "");
+            });
         }
 
         /// <summary>
@@ -111,6 +114,7 @@ namespace URLShortener
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSignalR();
 
             App = builder.Build();
         }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Describes a URL and its shortened version.
     /// </summary>
-    public interface IShortUrlModel : IEntity
+    public interface IShortUrlModel : IItem
     {
         /// <summary>
         /// Gets the date the URL was created.

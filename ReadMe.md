@@ -57,7 +57,7 @@ Alguns critérios de aceitação serão validados para conclusão do projeto.
 ## Anexos
 
 ## urls.json
-```
+``` json
 [
   { 
    "id": "23094", 
@@ -130,16 +130,16 @@ Alguns critérios de aceitação serão validados para conclusão do projeto.
 
 This URL shortener was developed using _Visual Studio 2022 Community Edition_, configured to run in _Docker Desktop_ (configured as Linux).
 
-The _Docker_ configuration is the default for a WebAPI project. No change was made to the ```Dockerfile```.
+The _Docker_ configuration is the default for a WebAPI project. No change was made to the `Dockerfile`.
 
 # Preparing the database
 
-In the folder named ```Data``` there are four files:
+In the folder named `Data` there are four files:
 
-* ```Database Schema.dbml```
-* ```ShortURLs.MySQL.sql```
-* ```ShortURLs.PostgreSQL.sql```
-* ```ShortURLs.SQL Server.sql```
+* `Database Schema.dbml`
+* `ShortURLs.MySQL.sql`
+* `ShortURLs.PostgreSQL.sql`
+* `ShortURLs.SQL Server.sql`
 
 The first file is writen in the Database Markup Language, used by dbdiagrams.io, which describes a database schema without biding it to a single DBMS.
 
@@ -155,9 +155,9 @@ A **Connection String** is a text containing parameters and values that specifie
 
 You'll need to inform, that is configure, a Connection String for the project to work correctly.
 
-To do this you’ll have to edit a file named ```appsettings.json```, located at the project root folder. This file contains all the configuration for the project to run.
+To do this you’ll have to edit a file named `appsettings.json`, located at the project root folder. This file contains all the configuration for the project to run.
 
-Open this file in your favorite simple text editor (I recommend _Notepad++_ &#x27A8; https://notepad-plus-plus.org), locate the section named ```ConnectionStrings```, and within it locate the name-value pair named ```db```.
+Open this file in your favorite simple text editor (I recommend _Notepad++_ &#x27A8; https://notepad-plus-plus.org), locate the section named `ConnectionStrings`, and within it locate the name-value pair named `db`.
 
 Once you find this, change its value to the appropriated Connection String for your database.
 
@@ -165,7 +165,7 @@ Once you find this, change its value to the appropriated Connection String for y
 
 In this project I used _NHibernate_ (https://nhibernate.info/) for database connection. It's a personal preference due the fact that I've been using it for a long time now.
 
-In the ```appsettings.json``` file, locate the section named ```Hibernate```, and within it there are two values that need to be changed, according to the following table:
+In the `appsettings.json` file, locate the section named `Hibernate`, and within it there are two values that need to be changed, according to the following table:
 
 | DBMS       | Driver                            | Dialect                              |
 |------------|-----------------------------------|--------------------------------------|
@@ -177,17 +177,17 @@ Choose the correct one for your DBMS, and change the values accordingly.
 
 ## Configuring NHibernate mapping
 
-The file ```NHibernate.map.xml``` contains the mapping configuration for a PostgreSQL database.
+The file `NHibernate.map.xml` contains the mapping configuration for a PostgreSQL database.
 
-If you're using a different database, you will need to change the ```generator``` element accordingly.
+If you're using a different database, you will need to change the `generator` element accordingly.
 
 **MySQL and SQL Server**
-```
+``` xml
 <generator class="identity"/>
 ```
 
 **PostgreSQL**
-```
+``` xml
 <generator class="sequence">
     <param name="sequence">&quot;ShortUrls_id_seq&quot;</param>
 </generator>
@@ -197,15 +197,15 @@ Further reference can be found [here][A1].
 
   [A1]: https://nhibernate.info/previous-doc/v5.3/single/index.html#mapping-declaration-id-sequences
 
-# Setting up the ```urls.json``` file
+# Setting up the `urls.json` file
 
-The ```urls.json``` file, which will be used to configure the initial state of the database, if used, MUST be placed in the ```Data``` folder.
+The `urls.json` file, which will be used to configure the initial state of the database, if used, MUST be placed in the `Data` folder.
 
 At the beginning of the execution, if this file is located at the proper folder, it will be consumed and all valid urls will be added to the database, if possible.
 
-Any exception or impossibility of adding any URL to the database will be logged to the file ```urls_json.log```, in the same directory.
+Any exception or impossibility of adding any URL to the database will be logged to the file `urls_json.log`, in the same directory.
 
-After consuming the JSON file, it will be renamed to ```urls.json.old``` with a sequential number if the ```.old``` file already exists.
+After consuming the JSON file, it will be renamed to `urls.json.old` with a sequential number if the `.old` file already exists.
 
 # Executing the URL Shortener
 
@@ -213,24 +213,45 @@ This project depends on the _Docker Desktop_, that needs to be installed in the 
 
 Once the project has been loaded in the _Visual Studio_, simply start the execution, _Visual Studio_ will take care of the _Docker_ installation, configuration, and execution.
 
-Afterwards your default browser will open with an instance of ```Swagger``` that allows you to try executing each one of the endpoints.
+Afterwards your default browser will open with an instance of `Swagger` that allows you to try executing each one of the endpoints.
 
-Calling the ```Get `/{shortUrl}` ``` from the ```Swagger``` with or without a valid short URL will result in an error, as this call assumes a user is calling from a browser.
+Calling the `Get `/{shortUrl}` ` from the `Swagger` with or without a valid short URL will result in an error, as this call assumes a user is calling from a browser.
 In a browser that call will redirect the user to the proper URL, and add the hits counter for that short URL.
 
-All other end points call be executed from ```Swagger```.
+All other end points call be executed from `Swagger`.
 
 # The API
 
-|             | Verb | Entry Point | Description                |
-|-------------|------|-------------|----------------------------|
-|[![][i1]][I1]| GET  | /{shortUrl} | Redirects to the long URL. |
-|[![][i1]][I1]| POST | /Add        | Adds a long URL to the repository <br/> Parameters: <br/> `url` : _string_ : Any Uniform Resource Locator <br/> Returns: <br/> `ShortUrlDTO` : _JSON_ : A Data Transfer Object that represents the added URL |
+## Exposed end points
 
+|             | Verb   | Entry Point              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|-------------|--------|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|[![][i1]][I1]| GET    | `/{shortUrl}           ` | Redirects to the long URL.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|[![][i1]][I1]| POST   | `/Add                  ` | Adds a long URL to the repository <br/> Parameters: <br/> `url` : _string_ : Any Uniform Resource Locator <br/> Returns: <br/> `ShortUrlDTO` : _JSON_ : A Data Transfer Object that represents the added URL                                                                                                                                                                                                                                                                                                                                        |
+|[![][i1]][I1]| PATCH  | `/Update               ` | Updates the URL and short URL of the specified `ShortUrlDTO`. <br/> Parameters: <br/> `model` : _ShortUrlDTO_ : A Data Transfer Object containg the data to be updated. <br/> Returns: <br/> `ShortUrlDTO` : _JSON_ : A Data Transfer Object that represents the updated URL. <br/> **Obs:** The API will first search for the short URL by the `shortUrl` property of the DTO, if no short URL exists then it will search for the `id` property of the DTO, if no short URL exists with the specified id then it will return a status code `404`.  |
+|[![][i1]][I1]| GET    | `/List                 ` | Returns a list of `ShortUrlDTO`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|[![][i1]][I1]| GET    | `/ById/{id}            ` | Returns a `ShortUrlDTO` with the specified id. <br/> Parameters: <br/> `id` : _int_ : The id of the short URL to retrieve the information                                                                                                                                                                                                                                                                                                                                                                                                           |
+|[![][i1]][I1]| DELETE | `/ById/{id}            ` | Deletes the short URL with the specified id. <br/> Parameters: <br/> `id` : _int_ : The id of the short URL to be deleted.                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|[![][i1]][I1]| DELETE | `/ByShortUrl/{shortUrl}` | Deletes the short URL with the specified short URL. <br/> Parameters: <br/> `shortUrl` : _string_ : The short URL to be deleted.                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|[![][i1]][I1]| GET    | `/Validate/{shortUrl}  ` | Checks if the specified short URL is working. <br/> Parameters: <br/> `shortUrl` : _string_ : The short URL to be verified. <br/> Returns: <br/> `OK` (Status Code 200) if the long URL exists and is active. <br/> `NotFound` (Status Code 404) if the long URL cannot be found _OK_ if the specified short URL is not in the repository. <br/> `Other` (Status Code _varies_) whatever status code was returned by the long URL.                                                                                                                  |
+
+## Data Transfer Object
+
+This API requires the following Data Transfer Object:
+
+``` json
+{
+ "id"          : int    : The identifier of the short URL.
+ "url"         : string : The Uniform Resource Locator that the short URL points to.
+ "hits"        : int    : The number of hits the shoert URL has.
+ "shortUrl"    : string : The short URL that points to the long URL.
+ "dateCreated" : int    : (Optional) The date when the short URL instance was creted.
+}
+```
 
 # Known problems
 
-I could not make the NHibernate connect to my ```SQL Server Express``` instnace from inside the ```Docker``` (see my question at [StackOverflow][A2]).
+I could not make the NHibernate connect to my `SQL Server Express` instnace from inside the `Docker` (see my question at [StackOverflow][A2]).
 
   [A2]: https://stackoverflow.com/questions/77288308/
   [I1]: https://paulstsmith.github.io/images/class/method.gif

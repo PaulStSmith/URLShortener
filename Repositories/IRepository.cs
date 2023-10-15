@@ -7,7 +7,7 @@ namespace URLShortener.Repositories
     /// Describes a repository for <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of the elements of the repository.</typeparam>
-    public interface IRepository<T> where T : IEntity
+    public interface IRepository<T> where T : IItem
     {
         /// <summary>
         /// Adds the specified <typeparamref name="T"/> to the repository.
