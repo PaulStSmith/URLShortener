@@ -1,4 +1,4 @@
-using NHibernate;
+ï»¿using NHibernate;
 using NHibernate.Exceptions;
 using Npgsql;
 using System.Text.Json;
@@ -62,7 +62,7 @@ namespace URLShortener
         }
 
         /// <summary>
-        /// Configures the NHibernate, based on the “appsettings.json” file.
+        /// Configures the NHibernate, based on the ï¿½appsettings.jsonï¿½ file.
         /// </summary>
         private static void ConfigureNHibernate()
         {
@@ -155,7 +155,7 @@ namespace URLShortener
         }
 
         /// <summary>
-        /// Process the ‘url.json’ file.
+        /// Process the ï¿½url.jsonï¿½ file.
         /// </summary>
         /// <param name="fileName">The name of the file to be precessed.</param>
         /// <param name="logger">A <see cref="TextWriter"/> to log the progress to.</param>
@@ -164,7 +164,7 @@ namespace URLShortener
         {
             var numInserted = 0;
             logger.WriteLine($@"--- Started at: {DateTime.Now}");
-            logger.WriteLine($@"    “{fileName}” exists. Attempting to read it.");
+            logger.WriteLine($@"    â€˜{fileName}â€™ exists. Attempting to read it.");
             using (var reader = new StreamReader(fileName, true))
             {
                 var cvt = JsonSerializer.Deserialize<ShortUrlDTO[]>(reader.ReadToEnd());
@@ -206,7 +206,7 @@ namespace URLShortener
         }
 
         /// <summary>
-        /// Renames the specified file to a file with a “.old” extension.
+        /// Renames the specified file to a file with a ï¿½.oldï¿½ extension.
         /// </summary>
         /// <param name="fileName">The file name to be renamed.</param>
         private static void RenameToOld(string fileName)

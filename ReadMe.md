@@ -1,4 +1,4 @@
-# URL Shortener
+ï»¿# URL Shortener
 
 This was created as a reply to a challenge issued by Mottu (https://mottu.com.br/).
 
@@ -10,47 +10,47 @@ Here's the original challenge (in Portuguese):
 
 ## _se divirta!
 
-Imagine um cenário de uma startup que precisa criar um novo serviço para resolver um problema da Mottu. Por aqui, trabalhamos com aplicações em REST API que disponibilizam informações para outros sistemas. Você será avaliado em vários conceitos importantes de desenvolvimento.
+Imagine um cenÃ¡rio de uma startup que precisa criar um novo serviÃ§o para resolver um problema da Mottu. Por aqui, trabalhamos com aplicaÃ§Ãµes em REST API que disponibilizam informaÃ§Ãµes para outros sistemas. Voc&e serÃ¡ avaliado em vÃ¡rios conceitos importantes de desenvolvimento.
 
-## Definição do projeto
+## DefiniÃ§Ã£o do projeto
 
-* O desafio proposto consiste no desenvolvimento de um encurtador de URL que deve ser implementado como back-end juntamente com um validador capaz de indicar se o link gerado está funcionando. Esse desenvolvimento é baseado em API`s REST.
+* O desafio proposto consiste no desenvolvimento de um encurtador de URL que deve ser implementado como back-end juntamente com um validador capaz de indicar se o link gerado estÃ¡ funcionando. Esse desenvolvimento Ã© baseado em API`s REST.
 
-* É esperado, através da implementação, que seja possível além de encurtar a URL e ao acessá-la, o número de acessos incremente-se para contagem de acessos.
+* Ã‰ esperado, atravÃ©s da implementaÃ§Ã£o, que seja possÃ­vel alÃ©m de encurtar a URL e ao acessÃ¡-la, o nÃºmero de acessos incremente-se para contagem de acessos.
 
-* Para cada criação de uma URL será necessário disparar um evento que futuramente poderá ser integrado em algum sistema de mensageria, inicialmente você pode disparar esse evento para um cache local ou para alguma fila, se a URL já existir não há necessidade de disparo no evento.
+* Para cada criaÃ§Ã£o de uma URL serÃ¡ necessÃ¡rio disparar um evento que futuramente poderÃ¡ ser integrado em algum sistema de mensageria, inicialmente vocÃª pode disparar esse evento para um cache local ou para alguma fila, se a URL jÃ¡ existir nÃ£o hÃ¡ necessidade de disparo do evento.
 
-* Todas as informações devem ser salvas em um banco de dados PostGres e desenvolvido em C#
+* Todas as informaÃ§Ãµes devem ser salvas em um banco de dados PostGres e desenvolvido em C#
 
 ## Entrega
 
-Toda entrega será realizada através de uma PR para um GIT da Mottu ou envio de um link do git pessoal contendo que deve estar público para facilitar o acesso
+Toda entrega serÃ¡ realizada atravÃ©s de uma PR para um GIT da Mottu ou envio de um link do git pessoal contendo que deve estar pÃºblico para facilitar o acesso
 
-Critérios de aceite
+CritÃ©rios de aceite
 
-Alguns critérios de aceitação serão validados para conclusão do projeto.
+Alguns critÃ©rios de aceitaÃ§Ã£o serÃ£o validados para conclusÃ£o do projeto.
 
-* [Fluxo] - Execução completa de um fluxo considerando as API’s de cadastro e consulta de URL’s encurtadas
+* [Fluxo] - ExecuÃ§Ã£o completa de um fluxo considerando as APIâ€™s de cadastro e consulta de URLâ€™s encurtadas
 
-* [Código] - O código compartilhado deverá funcionar (rodar) e representar os itens listados
+* [CÃ³digo] - O cï¿½digo compartilhado deverï¿½ funcionar (rodar) e representar os itens listados
 
-* [Docker] imagens devem estar acessíveis para validação.
+* [Docker] imagens devem estar acessï¿½veis para validaï¿½ï¿½o.
 
 * Garanta um README para rodar seu projeto, importante que ele funcione ao ser executado
 
-* Não temos um prazo estipulado para a solução desse desafio, mas acreditamos que você não deveria gastar mais do que 10 horas nele. É importante que você alinhe o prazo de entrega com seu contato na Mottu.
+* NÃ£o temos um prazo estipulado para a soluÃ§Ã£o desse desafio, mas acreditamos que vocÃª nÃ£o deveria gastar mais do que 10 horas nele. Ã‰ importante que vocÃª alinhe o prazo de entrega com seu contato na Mottu.
 
-* **SE NOTARMOS QUE O CÓDIGO FOI COPIADO E COLADO, SERÁ DESQUALIFICADO AUTOMATICAMENTE.**
+* **SE NOTARMOS QUE O CÃ“DIGO FOI COPIADO E COLADO, SERÃ DESQUALIFICADO AUTOMATICAMENTE.**
 
 ## Diferenciais
 
-* Boa documentação (como rodar o projeto e outras observações)
+* Boa documentaÃ§Ã£o (como rodar o projeto e outras observaÃ§Ãµes)
 
-* Estrutura do código, facilidade de leitura, boas práticas de desenvolvimento
+* Estrutura do cÃ³digo, facilidade de leitura, boas prÃ¡ticas de desenvolvimento
 
-* Consumir o JSON urls.json no back-end para a seção TOP 5 como o estado inicial da aplicação;
+* Consumir o JSON urls.json no back-end para a seÃ§Ã£o TOP 5 como o estado inicial da aplicaÃ§Ã£o;
 
-* Criar outros endpoints importantes para o encurtador que você julgar necessário
+* Criar outros endpoints importantes para o encurtador que vocï¿½ julgar necessÃ¡rio
 
 **Boa sorte! =]**
 
@@ -155,7 +155,7 @@ A **Connection String** is a text containing parameters and values that specifie
 
 You'll need to inform, that is configure, a Connection String for the project to work correctly.
 
-To do this you’ll have to edit a file named `appsettings.json`, located at the project root folder. This file contains all the configuration for the project to run.
+To do this youâ€™ll have to edit a file named `appsettings.json`, located at the project root folder. This file contains all the configuration for the project to run.
 
 Open this file in your favorite simple text editor (I recommend _Notepad++_ &#x27A8; https://notepad-plus-plus.org), locate the section named `ConnectionStrings`, and within it locate the name-value pair named `db`.
 
